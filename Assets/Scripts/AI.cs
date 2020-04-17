@@ -12,6 +12,7 @@ public class AI : MonoBehaviour
     public float DistanceLeft;
     public float Speed;
     public bool animationCompleted = true;
+    bool playerDead;
 
     Dictionary<string,float> animations = new Dictionary<string,float>();
 
@@ -29,28 +30,41 @@ public class AI : MonoBehaviour
     void Update()
     {
         animator.SetFloat("Speed", agent.velocity.magnitude);
+        playerDead = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().IsPlayerDead;
     }
 
     private void OnTriggerStay(Collider other)
     {
         transform.LookAt(Player);
-        if (Vector3.Distance(gameObject.transform.position, other.transform.position) < DistanceLeft)
+
+        if (!playerDead)
         {
-            agent.isStopped = true;
-            //animator.SetTrigger("Attack");
-            if (animationCompleted)
+            if (Vector3.Distance(gameObject.transform.position, other.transform.position) < DistanceLeft)
             {
-                var index = Random.Range(0, animations.Count);
-                animator.SetTrigger(animations.Keys.ToArray()[index]);
-                Invoke("onAnimationCompleted", animations.Values.ToArray()[index]);
-                animationCompleted = false;
+                agent.isStopped = true;
+                if (animationCompleted)
+                {
+                    var index = Random.Range(0, animations.Count);
+                    animator.SetTrigger(animations.Keys.ToArray()[index]);
+                    Invoke("onAnimationCompleted", animations.Values.ToArray()[index]);
+                    animationCompleted = false;
+                }
+            }
+            else
+            {
+                agent.SetDestination(other.transform.position);
+                agent.isStopped = false;
             }
         }
-        else
+
+        if (playerDead)
         {
-            //animator.ResetTrigger("Attack");
-            agent.SetDestination(other.transform.position);
-            agent.isStopped = false;
+            agent.isStopped = true;
+            agent.ResetPath();
+            animator.SetFloat("Speed", 0f);
+            animator.ResetTrigger("Box");
+            animator.ResetTrigger("Uppercut");
+            FindObjectOfType<CountDown>().timerIsActive = false;
         }
     }
 

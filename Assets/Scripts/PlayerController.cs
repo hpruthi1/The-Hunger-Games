@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using EZCameraShake;
 
 public class PlayerController : MonoBehaviour
@@ -17,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     public float WalkSpeed = 10.0f;
     public bool IsPlayerDead = false;
+    public HealthSystem healthSystem;
+    public Image PlayerHealthimage;
 
     private void Awake()
     {
@@ -28,10 +31,21 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        PlayerHealthimage.fillAmount = healthSystem.Health / 100;
         canJump = false;
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        //Flip(horizontal);
+
+        if(healthSystem.Health <= 0)
+        {
+            IsPlayerDead = true;
+        }
+
+        if (IsPlayerDead)
+        {
+            //StartCoroutine(Death());
+        }
+
         animator.SetFloat("Speed", characterController.velocity.magnitude);
         if (characterController.isGrounded)
         {
@@ -48,7 +62,6 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 animator.SetTrigger("BrutalPunch");
-                //FindObjectOfType<AI>().GetComponent<Animator>().SetTrigger("Death");
             }
 
             if (Input.GetKeyDown(KeyCode.E))
@@ -77,21 +90,14 @@ public class PlayerController : MonoBehaviour
                 animator.ResetTrigger("CrouchAttack");
             }
         }
-            moveDirection.y -= 9.8f * Time.deltaTime;
-            characterController.Move(moveDirection * Speed * Time.deltaTime);
-            animator.SetBool("Jump", canJump);
-    }
 
-   /* private void Flip(float horizontal)
-    {
-        if (horizontal > 0 && !isFacingRight || horizontal < 0 && isFacingRight)
+        if (!IsPlayerDead)
         {
-            isFacingRight = !isFacingRight;
-            Vector3 Scale = transform.localScale;
-            Scale.z *= -1;
-            transform.localScale = Scale;
+            moveDirection.y -= 9.8f * Time.deltaTime;
+            characterController.Move(moveDirection * Speed * Time.deltaTime);   
         }
-        */
+        animator.SetBool("Jump", canJump);
+    }
 
     IEnumerator ChangeCollider()
     {
@@ -108,6 +114,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("EnemyFist"))
         {
+            gameObject.GetComponent<HealthSystem>().healthDecrease(5);
             CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, 1f);
             animator.SetTrigger("UppercutHit");
         }

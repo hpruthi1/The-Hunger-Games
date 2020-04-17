@@ -14,10 +14,19 @@ public class CharacterCustomization : MonoBehaviour
         Bryce.SetActive(false);
         Alex.SetActive(false);
     }
+
+    public void onCharacter1Button()
+    {
+        James.SetActive(true);
+        Bryce.SetActive(false);
+        Alex.SetActive(false);
+    }
+
     public void onCharacter2Button()
     {
         James.SetActive(false);
         Bryce.SetActive(true);
+        Alex.SetActive(false);
     }
 
     public void onCharacter3Button()
