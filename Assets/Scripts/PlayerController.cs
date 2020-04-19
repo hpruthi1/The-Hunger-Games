@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 using UnityEngine.UI;
 using EZCameraShake;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     private Vector3 movePosition = Vector3.zero;
     private Vector3 moveDirection = Vector3.zero, moveForward;
@@ -26,77 +27,86 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         isFacingRight = true;
+
+        if (isLocalPlayer)
+        {
+            //PlayerHealthimage = GameObject.FindGameObjectWithTag("Health").GetComponent<Image>();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        PlayerHealthimage.fillAmount = healthSystem.Health / 100;
-        canJump = false;
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-
-        if(healthSystem.Health <= 0)
+        
+        if (isLocalPlayer)
         {
-            IsPlayerDead = true;
+            PlayerHealthimage.fillAmount = healthSystem.Health / 100;
+            canJump = false;
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+
+            if (healthSystem.Health <= 0)
+            {
+                IsPlayerDead = true;
+            }
+
+            if (IsPlayerDead)
+            {
+                //StartCoroutine(Death());
+            }
+
+            animator.SetFloat("Speed", characterController.velocity.magnitude);
+            if (characterController.isGrounded)
+            {
+                moveDirection = new Vector3(-vertical, 0, horizontal);
+                moveDirection = transform.TransformDirection(moveDirection);
+                moveDirection *= Speed;
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    canJump = true;
+                    moveDirection.y = JumpSpeed;
+                }
+
+                if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    animator.SetTrigger("BrutalPunch");
+                }
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    canAttack = true;
+                    animator.SetTrigger("Kick");
+                }
+
+                if (Input.GetKeyDown(KeyCode.T))
+                {
+                    animator.SetTrigger("Hook");
+                }
+
+                if (Input.GetKeyDown(KeyCode.LeftControl))
+                {
+                    StartCoroutine(ChangeCollider());
+                    animator.SetTrigger("CanCrouch");
+                }
+
+                if (Input.GetKey(KeyCode.C))
+                {
+                    animator.SetTrigger("CrouchAttack");
+                }
+                if (Input.GetKeyUp(KeyCode.C))
+                {
+                    animator.ResetTrigger("CrouchAttack");
+                }
+            }
+
+            if (!IsPlayerDead)
+            {
+                moveDirection.y -= 9.8f * Time.deltaTime;
+                characterController.Move(moveDirection * Speed * Time.deltaTime);
+            }
+            animator.SetBool("Jump", canJump);
         }
-
-        if (IsPlayerDead)
-        {
-            //StartCoroutine(Death());
-        }
-
-        animator.SetFloat("Speed", characterController.velocity.magnitude);
-        if (characterController.isGrounded)
-        {
-            moveDirection = new Vector3(-vertical, 0, horizontal);
-            moveDirection = transform.TransformDirection(moveDirection);
-            moveDirection *= Speed;
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                canJump = true;
-                moveDirection.y = JumpSpeed;
-            }
-
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                animator.SetTrigger("BrutalPunch");
-            }
-
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                canAttack = true;
-                animator.SetTrigger("Kick");
-            }
-
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                animator.SetTrigger("Hook");
-            }
-
-            if (Input.GetKeyDown(KeyCode.LeftControl))
-            {
-                StartCoroutine(ChangeCollider());
-                animator.SetTrigger("CanCrouch");
-            }
-
-            if(Input.GetKey(KeyCode.C))
-            {
-                animator.SetTrigger("CrouchAttack");
-            }
-            if (Input.GetKeyUp(KeyCode.C))
-            {
-                animator.ResetTrigger("CrouchAttack");
-            }
-        }
-
-        if (!IsPlayerDead)
-        {
-            moveDirection.y -= 9.8f * Time.deltaTime;
-            characterController.Move(moveDirection * Speed * Time.deltaTime);   
-        }
-        animator.SetBool("Jump", canJump);
     }
 
     IEnumerator ChangeCollider()
