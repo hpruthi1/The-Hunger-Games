@@ -1096,7 +1096,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   Speed: 1.3
-  JumpSpeed: 20
+  JumpSpeed: 4
   isFacingRight: 0
   WalkSpeed: 10
   IsPlayerDead: 0

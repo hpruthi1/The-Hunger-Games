@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using EZCameraShake;
 
 public class PlayerController : NetworkBehaviour
@@ -22,6 +23,7 @@ public class PlayerController : NetworkBehaviour
     public HealthSystem healthSystem;
     public Image PlayerHealthimage;
     public bool LocalplayerEnabled = false;
+    public bool Practice = false;
 
     private void Awake()
     {
@@ -34,6 +36,14 @@ public class PlayerController : NetworkBehaviour
         isFacingRight = true;
 
         PlayerHealthimage = GameObject.FindGameObjectWithTag("Health").GetComponent<Image>();
+    }
+
+    private void Start()
+    {
+        if (Application.loadedLevelName == "Practice")
+        {
+            Practice = true;
+        }
     }
 
     // Update is called once per frame
@@ -72,33 +82,52 @@ public class PlayerController : NetworkBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
-                    animator.SetTrigger("BrutalPunch");
+                    if (Practice)
+                    {
+                        animator.SetTrigger("BrutalPunch");
+                    }
+                    else
+                    {
+                        CmdBrutalPunch();
+                    }
                 }
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    canAttack = true;
-                    animator.SetTrigger("Kick");
+                    if (Practice)
+                    {
+                        canAttack = true;
+                        animator.SetTrigger("Kick");
+                    }
+                    else
+                    {
+                        CmdKick();
+                    }
                 }
 
                 if (Input.GetKeyDown(KeyCode.T))
                 {
-                    animator.SetTrigger("Hook");
+                    if (Practice)
+                    {
+                        animator.SetTrigger("Hook");
+                    }
+                    else
+                    {
+                        CmdHook();
+                    }
                 }
 
                 if (Input.GetKeyDown(KeyCode.LeftControl))
                 {
-                    StartCoroutine(ChangeCollider());
-                    animator.SetTrigger("CanCrouch");
-                }
-
-                if (Input.GetKey(KeyCode.C))
-                {
-                    animator.SetTrigger("CrouchAttack");
-                }
-                if (Input.GetKeyUp(KeyCode.C))
-                {
-                    animator.ResetTrigger("CrouchAttack");
+                    if (Practice)
+                    {
+                        StartCoroutine(ChangeCollider());
+                        animator.SetTrigger("CanCrouch");
+                    }
+                    else
+                    {
+                        CmdCrouch();
+                    }
                 }
             }
 
@@ -135,6 +164,80 @@ public class PlayerController : NetworkBehaviour
     public void PlayerActive()
     {
         gameObject.SetActive(true);
+    }
+
+    [Command]
+    void CmdKick()
+    {
+        Kick();
+        RpcKick();
+    }
+
+    [Command]
+    void CmdBrutalPunch()
+    {
+        BrutalPunch();
+        RpcBrutalPunch();
+    }
+
+    [Command]
+    void CmdCrouch()
+    {
+        Crouch();
+        RpcCrouch();
+    }
+
+    [Command]
+    void CmdHook()
+    {
+        Hook();
+        RpcHook();
+    }
+
+    void Kick()
+    {
+        canAttack = true;
+        animator.SetTrigger("Kick");
+    }
+
+    [ClientRpc]
+    void RpcKick()
+    {
+        Kick();
+    }
+
+    void BrutalPunch()
+    {
+        animator.SetTrigger("BrutalPunch");
+    }
+
+    [ClientRpc]
+    void RpcBrutalPunch()
+    {
+        BrutalPunch();
+    }
+
+    void Crouch()
+    {
+        StartCoroutine(ChangeCollider());
+        animator.SetTrigger("CanCrouch");
+    }
+
+    [ClientRpc]
+    void RpcCrouch()
+    {
+        Crouch();
+    }
+
+    void Hook()
+    {
+        animator.SetTrigger("Hook");
+    }
+
+    [ClientRpc]
+    void RpcHook()
+    {
+        Hook();
     }
 }
 

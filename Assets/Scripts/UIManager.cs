@@ -20,9 +20,20 @@ public class UIManager : MonoBehaviour
         
     }
 
-    public void onPracticeButtoonClick()
+    public void OnlineScene()
     {
         SceneManager.LoadScene(1);
-        FindObjectOfType<NetworkManagerHUD>().enabled = false;
     }
+
+    public void OflineScene()
+    {
+
+        SceneManager.LoadScene(2);
+    }
+
+   // public void onPracticeButtoonClick()
+    //{
+      //  SceneManager.LoadScene(1);
+      //  FindObjectOfType<NetworkManagerHUD>().enabled = false;
+    //}
 }
