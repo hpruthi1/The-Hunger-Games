@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - EnemyFist
   - Health
+  - NetworkManager
   layers:
   - Default
   - TransparentFX

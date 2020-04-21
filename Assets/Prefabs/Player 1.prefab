@@ -284,8 +284,8 @@ MonoBehaviour:
   WalkSpeed: 3
   IsPlayerDead: 0
   healthSystem: {fileID: 886977036279754636}
-  PlayerHealthimage: {fileID: 3656101366105008500, guid: fea15ffa55dd32d40a174e6822a29765,
-    type: 3}
+  PlayerHealthimage: {fileID: 0}
+  LocalplayerEnabled: 1
 --- !u!114 &886977036279754636
 MonoBehaviour:
   m_ObjectHideFlags: 0

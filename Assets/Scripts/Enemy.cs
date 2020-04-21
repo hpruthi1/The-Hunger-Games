@@ -24,7 +24,14 @@ public class Enemy : MonoBehaviour
         if(healthSystem.Health <= 0)
         {
             FindObjectOfType<CountDown>().timerIsActive = false;
-            Destroy(gameObject);
+            GameObject.FindGameObjectWithTag("EnemyFist").GetComponent<BoxCollider>().enabled = false;
+            //Destroy(gameObject);
+            animator.ResetTrigger("Uppercut");
+            animator.ResetTrigger("Box");
+            animator.ResetTrigger("Hit");
+            //animator.SetFloat("Speed", 0f);
+            FindObjectOfType<AI>().agent.isStopped = true;
+            //Destroy(gameObject);
         }
     }
 

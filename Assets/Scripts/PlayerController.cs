@@ -21,29 +21,31 @@ public class PlayerController : NetworkBehaviour
     public bool IsPlayerDead = false;
     public HealthSystem healthSystem;
     public Image PlayerHealthimage;
+    public bool LocalplayerEnabled = false;
 
     private void Awake()
     {
+        if (LocalplayerEnabled)
+        {
+            Invoke("PlayerActive", .1f);
+        }
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         isFacingRight = true;
 
-        if (isLocalPlayer)
-        {
-            //PlayerHealthimage = GameObject.FindGameObjectWithTag("Health").GetComponent<Image>();
-        }
+        PlayerHealthimage = GameObject.FindGameObjectWithTag("Health").GetComponent<Image>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        if (isLocalPlayer)
+        if (isLocalPlayer || LocalplayerEnabled ) 
         {
             PlayerHealthimage.fillAmount = healthSystem.Health / 100;
             canJump = false;
             float horizontal = Input.GetAxis("Horizontal");
-            float vertical = Input.GetAxis("Vertical");
+            //float vertical = Input.GetAxis("Vertical");
 
             if (healthSystem.Health <= 0)
             {
@@ -58,7 +60,7 @@ public class PlayerController : NetworkBehaviour
             animator.SetFloat("Speed", characterController.velocity.magnitude);
             if (characterController.isGrounded)
             {
-                moveDirection = new Vector3(-vertical, 0, horizontal);
+                moveDirection = new Vector3(0, 0, horizontal);
                 moveDirection = transform.TransformDirection(moveDirection);
                 moveDirection *= Speed;
 
@@ -128,6 +130,11 @@ public class PlayerController : NetworkBehaviour
             CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, 1f);
             animator.SetTrigger("UppercutHit");
         }
+    }
+
+    public void PlayerActive()
+    {
+        gameObject.SetActive(true);
     }
 }
 

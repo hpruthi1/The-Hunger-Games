@@ -7,8 +7,8 @@ using System.Linq;
 public class AI : MonoBehaviour
 {
     public Animator animator;
-    private NavMeshAgent agent;
-    public Transform Player;
+    public NavMeshAgent agent;
+    //public Transform Player;
     public float DistanceLeft;
     public float Speed;
     public bool animationCompleted = true;
@@ -35,7 +35,7 @@ public class AI : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        transform.LookAt(Player);
+        transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform);
 
         if (!playerDead)
         {
