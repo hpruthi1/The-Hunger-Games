@@ -557,7 +557,9 @@ MonoBehaviour:
   Alex: {fileID: 7482379936359862136}
   Bryce: {fileID: 2773586681311482692}
   James: {fileID: 2568315098727849918}
+  Player1: {fileID: 886977036279754627, guid: f72609787ae91c04891bfadb81f8f412, type: 3}
   Player2: {fileID: 3881200637280093118, guid: 8e535852d48d78b4ba699d9f9eea6698, type: 3}
+  Player3: {fileID: 6393091978916856413, guid: a6d03b8b415a46748a313f2fbb499f64, type: 3}
 --- !u!1 &1023453312
 GameObject:
   m_ObjectHideFlags: 0

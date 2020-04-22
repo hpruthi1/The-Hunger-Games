@@ -1967,6 +1967,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4455048347907388339, guid: f10b4931a11d62c409dad3a177646c0d,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 8119193155838009476, guid: f10b4931a11d62c409dad3a177646c0d,
         type: 3}
       propertyPath: m_TagString
@@ -8656,6 +8661,7 @@ MonoBehaviour:
   DistanceLeft: 1.6
   Speed: 2
   animationCompleted: 1
+  playerDead: 0
 --- !u!135 &687951323
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -20985,6 +20991,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1688538544}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1695248339 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4455048347907388339, guid: f10b4931a11d62c409dad3a177646c0d,
+    type: 3}
+  m_PrefabInstance: {fileID: 97054826}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1695248341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695248339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11c2146de91619343b44d52c3baa0323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &1695248342
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695248339}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.10482985, y: 0.056715336, z: 0.03875463}
+  m_Center: {x: 0.043662112, y: 0.010910112, z: 0.020550653}
 --- !u!1001 &1696854948
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27717,7 +27754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d8a5a206e18b65449008755934d2065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
+  Health: 20
 --- !u!1 &886977035289861977
 GameObject:
   m_ObjectHideFlags: 0
@@ -29850,6 +29887,7 @@ MonoBehaviour:
   healthSystem: {fileID: 886977035289861974}
   PlayerHealthimage: {fileID: 0}
   LocalplayerEnabled: 1
+  Practice: 0
 --- !u!95 &9182489979709145583
 Animator:
   serializedVersion: 3

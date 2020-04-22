@@ -12,7 +12,7 @@ public class AI : MonoBehaviour
     public float DistanceLeft;
     public float Speed;
     public bool animationCompleted = true;
-    bool playerDead;
+    public bool playerDead;
 
     Dictionary<string,float> animations = new Dictionary<string,float>();
 

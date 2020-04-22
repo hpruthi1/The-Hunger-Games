@@ -169,28 +169,28 @@ public class PlayerController : NetworkBehaviour
     [Command]
     void CmdKick()
     {
-        Kick();
+        //Kick();
         RpcKick();
     }
 
     [Command]
     void CmdBrutalPunch()
     {
-        BrutalPunch();
+        //BrutalPunch();
         RpcBrutalPunch();
     }
 
     [Command]
     void CmdCrouch()
     {
-        Crouch();
+        //Crouch();
         RpcCrouch();
     }
 
     [Command]
     void CmdHook()
     {
-        Hook();
+        //Hook();
         RpcHook();
     }
 

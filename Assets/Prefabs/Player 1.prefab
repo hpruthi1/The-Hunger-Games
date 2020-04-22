@@ -285,7 +285,8 @@ MonoBehaviour:
   IsPlayerDead: 0
   healthSystem: {fileID: 886977036279754636}
   PlayerHealthimage: {fileID: 0}
-  LocalplayerEnabled: 1
+  LocalplayerEnabled: 0
+  Practice: 0
 --- !u!114 &886977036279754636
 MonoBehaviour:
   m_ObjectHideFlags: 0
