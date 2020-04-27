@@ -5,27 +5,15 @@ using Mirror;
 
 public class CharacterCustomization : MonoBehaviour
 {
-    #region Private .
-    private PlayerInstance _playerInstance;
-    #endregion
-
     public GameObject Alex;
     public GameObject Bryce;
     public GameObject James;
-    public GameObject Player1;
-    public GameObject Player2;
-    public GameObject Player3;
     private int SelectedPlayer;
 
     private void Awake()
     {
         
             
-    }
-
-    public void SelectCharacter(CharacterSelection selection)
-    {
-        _playerInstance.PlayerSpawner.TrySpawn(selection.CharacterType);
     }
 
     private void Start()

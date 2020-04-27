@@ -28,7 +28,7 @@ public class PlayerController : NetworkBehaviour
 
     private void Awake()
     {
-        if (LocalplayerEnabled)
+        if (LocalplayerEnabled || Practice)
         {
             Invoke("PlayerActive", .1f);
         }
@@ -96,8 +96,7 @@ public class PlayerController : NetworkBehaviour
                 {
                     if (Practice)
                     {
-                        canAttack = true;
-                        animator.SetTrigger("Kick");
+                        Kick();
                     }
                     else
                     {
@@ -109,7 +108,7 @@ public class PlayerController : NetworkBehaviour
                 {
                     if (Practice)
                     {
-                        animator.SetTrigger("Hook");
+                        Hook();
                     }
                     else
                     {
@@ -121,8 +120,7 @@ public class PlayerController : NetworkBehaviour
                 {
                     if (Practice)
                     {
-                        StartCoroutine(ChangeCollider());
-                        animator.SetTrigger("CanCrouch");
+                        Crouch();
                     }
                     else
                     {
@@ -221,7 +219,15 @@ public class PlayerController : NetworkBehaviour
 
     void BrutalPunch()
     {
-        Instantiate(HitEffect, transform.position, Quaternion.identity);
+        if (Practice)
+        {
+            Instantiate(HitEffect, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            HitEffect = FindObjectOfType<NetworkManager>().spawnPrefabs[3];
+            Instantiate(HitEffect, transform.position, Quaternion.identity);
+        }
         animator.SetTrigger("BrutalPunch");
     }
 
