@@ -15,7 +15,7 @@ public class CharacterCustomization : MonoBehaviour
     public GameObject Player1;
     public GameObject Player2;
     public GameObject Player3;
-
+    private int SelectedPlayer;
 
     private void Awake()
     {
@@ -30,7 +30,6 @@ public class CharacterCustomization : MonoBehaviour
 
     private void Start()
     {
-        //if (isLocalPlayer)
         {
             James.SetActive(true);
             Bryce.SetActive(false);
@@ -40,10 +39,9 @@ public class CharacterCustomization : MonoBehaviour
 
     public void onCharacter1Button()
     {
-        //if (isLocalPlayer)
         {
-            FindObjectOfType<NetworkManager>().playerPrefab = Player1;
-            //CmdPlayer1Spawn();
+            SelectedPlayer = 1;
+            FindObjectOfType<NetworkManager>().playerPrefab = FindObjectOfType<NetworkManager>().spawnPrefabs[0];
             James.SetActive(true);
             Bryce.SetActive(false);
             Alex.SetActive(false);
@@ -52,10 +50,9 @@ public class CharacterCustomization : MonoBehaviour
 
     public void onCharacter2Button()
     {
-        //if (isLocalPlayer)
         {
-            FindObjectOfType<NetworkManager>().playerPrefab = Player2;
-            //CmdPlayer2Spawn();
+            SelectedPlayer = 2;
+            FindObjectOfType<NetworkManager>().playerPrefab = FindObjectOfType<NetworkManager>().spawnPrefabs[1];
             James.SetActive(false);
             Bryce.SetActive(true);
             Alex.SetActive(false);
@@ -64,57 +61,12 @@ public class CharacterCustomization : MonoBehaviour
 
     public void onCharacter3Button()
     {
-       // if (isLocalPlayer)
         {
+            SelectedPlayer = 3;
             James.SetActive(false);
             Bryce.SetActive(false);
             Alex.SetActive(true);
-            FindObjectOfType<NetworkManager>().playerPrefab = Player3;
-            //CmdPlayer3Spawn();
+            FindObjectOfType<NetworkManager>().playerPrefab = FindObjectOfType<NetworkManager>().spawnPrefabs[2];
         }
     }
-
-    /*
-    [Command]
-
-    void CmdPlayer1Spawn()
-    {
-        RpcPlayer1Spawn();
-    }
-
-    [ClientRpc]
-
-    void RpcPlayer1Spawn()
-    {
-        FindObjectOfType<NetworkManager>().playerPrefab = Player1;
-    }
-
-    [Command]
-
-    void CmdPlayer2Spawn()
-    {
-        RpcPlayer2Spawn();
-    }
-
-    [ClientRpc]
-
-    void RpcPlayer2Spawn()
-    {
-        FindObjectOfType<NetworkManager>().playerPrefab = Player2;
-    }
-
-    [Command]
-
-    void CmdPlayer3Spawn()
-    {
-        RpcPlayer3Spawn();
-    }
-
-    [ClientRpc]
-
-    void RpcPlayer3Spawn()
-    {
-        FindObjectOfType<NetworkManager>().playerPrefab = Player3;
-    }
-    */
 }

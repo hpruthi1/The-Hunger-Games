@@ -12,6 +12,7 @@ public class PlayerController : NetworkBehaviour
     private Vector3 moveDirection = Vector3.zero, moveForward;
     public float Speed;
     public float JumpSpeed = 20.0f;
+    public GameObject HitEffect;
     private bool canJump = false;
     private bool canCrouch = false;
     public bool isFacingRight;
@@ -55,7 +56,6 @@ public class PlayerController : NetworkBehaviour
             PlayerHealthimage.fillAmount = healthSystem.Health / 100;
             canJump = false;
             float horizontal = Input.GetAxis("Horizontal");
-            //float vertical = Input.GetAxis("Vertical");
 
             if (healthSystem.Health <= 0)
             {
@@ -84,7 +84,7 @@ public class PlayerController : NetworkBehaviour
                 {
                     if (Practice)
                     {
-                        animator.SetTrigger("BrutalPunch");
+                        BrutalPunch();
                     }
                     else
                     {
@@ -167,30 +167,43 @@ public class PlayerController : NetworkBehaviour
     }
 
     [Command]
+    void CmdWalk()
+    {
+        RpcWalk();
+    }
+
+    [ClientRpc]
+    void RpcWalk()
+    {
+        Walk();
+    }
+
+    void Walk()
+    {
+        animator.SetFloat("Speed", characterController.velocity.magnitude);
+    }
+
+    [Command]
     void CmdKick()
     {
-        //Kick();
         RpcKick();
     }
 
     [Command]
     void CmdBrutalPunch()
     {
-        //BrutalPunch();
         RpcBrutalPunch();
     }
 
     [Command]
     void CmdCrouch()
     {
-        //Crouch();
         RpcCrouch();
     }
 
     [Command]
     void CmdHook()
     {
-        //Hook();
         RpcHook();
     }
 
@@ -208,6 +221,7 @@ public class PlayerController : NetworkBehaviour
 
     void BrutalPunch()
     {
+        Instantiate(HitEffect, transform.position, Quaternion.identity);
         animator.SetTrigger("BrutalPunch");
     }
 

@@ -27754,7 +27754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d8a5a206e18b65449008755934d2065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 20
+  Health: 100
 --- !u!1 &886977035289861977
 GameObject:
   m_ObjectHideFlags: 0
@@ -29881,11 +29881,12 @@ MonoBehaviour:
   syncInterval: 0.1
   Speed: 1.3
   JumpSpeed: 3
+  HitEffect: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9, type: 3}
   isFacingRight: 0
   WalkSpeed: 3
   IsPlayerDead: 0
   healthSystem: {fileID: 886977035289861974}
-  PlayerHealthimage: {fileID: 0}
+  PlayerHealthimage: {fileID: 901996714}
   LocalplayerEnabled: 1
   Practice: 0
 --- !u!95 &9182489979709145583
