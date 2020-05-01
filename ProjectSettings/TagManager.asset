@@ -10,6 +10,8 @@ TagManager:
   - EnemyFist
   - Health
   - NetworkManager
+  - Bot
+  - Effect
   layers:
   - Default
   - TransparentFX

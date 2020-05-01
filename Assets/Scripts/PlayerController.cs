@@ -13,6 +13,7 @@ public class PlayerController : NetworkBehaviour
     public float Speed;
     public float JumpSpeed = 20.0f;
     public GameObject HitEffect;
+    public GameObject EnergyBoostEffect;
     private bool canJump = false;
     private bool canCrouch = false;
     public bool isFacingRight;
@@ -127,6 +128,25 @@ public class PlayerController : NetworkBehaviour
                         CmdCrouch();
                     }
                 }
+
+                if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    if (!IsPlayerDead)
+                    {
+                        if (gameObject.GetComponent<HealthSystem>().Health <= 50f)
+                        {
+                            if (Practice)
+                            {
+                                OnHealthBoost();
+                                gameObject.GetComponent<HealthSystem>().healthincrease(30);
+                            }
+                        }
+                        else
+                        {
+                            CmdOnHealthBoost();
+                        }
+                    }
+                }
             }
 
             if (!IsPlayerDead)
@@ -140,10 +160,12 @@ public class PlayerController : NetworkBehaviour
 
     IEnumerator ChangeCollider()
     {
+        gameObject.GetComponentInChildren<BoxCollider>().enabled = false;
         gameObject.GetComponent<CharacterController>().center = new Vector3(0.15f, 0.59f, 0.42f);
         gameObject.GetComponent<CharacterController>().radius = 0.55f;
         gameObject.GetComponent<CharacterController>().height = 0.07f;
         yield return new WaitForSeconds(1.5f);
+        gameObject.GetComponentInChildren<BoxCollider>().enabled = true;
         gameObject.GetComponent<CharacterController>().center = new Vector3(0, 0.92f, 0);
         gameObject.GetComponent<CharacterController>().radius = 0.24f;
         gameObject.GetComponent<CharacterController>().height = 1.63f;
@@ -151,13 +173,16 @@ public class PlayerController : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("EnemyFist"))
+        Debug.Log(other.gameObject);
+        if (other.gameObject.CompareTag("EnemyFist") || other.gameObject.CompareTag("Finger"))
         {
             gameObject.GetComponent<HealthSystem>().healthDecrease(5);
             CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, 1f);
             animator.SetTrigger("UppercutHit");
         }
     }
+
+
 
     public void PlayerActive()
     {
@@ -258,6 +283,31 @@ public class PlayerController : NetworkBehaviour
     void RpcHook()
     {
         Hook();
+    }
+
+    void OnHealthBoost()
+    {
+        if (Practice)
+        {
+            Instantiate(EnergyBoostEffect, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            EnergyBoostEffect = FindObjectOfType<NetworkManager>().spawnPrefabs[4];
+            Instantiate(EnergyBoostEffect, transform.position, Quaternion.identity);
+        }
+    }
+
+    [ClientRpc]
+    void RpcOnHealthBoost()
+    {
+        OnHealthBoost();
+    }
+
+    [Command]
+    void CmdOnHealthBoost()
+    {
+        RpcOnHealthBoost();
     }
 }
 

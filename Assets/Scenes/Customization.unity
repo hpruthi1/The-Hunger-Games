@@ -449,6 +449,7 @@ GameObject:
   - component: {fileID: 549628770}
   - component: {fileID: 549628769}
   - component: {fileID: 549628773}
+  - component: {fileID: 549628774}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -554,12 +555,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 907db30801355024b8be59d9535d545c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 1
+  runInBackground: 1
+  startOnHeadless: 1
+  showDebugMessages: 0
+  serverTickRate: 30
+  offlineScene: 
+  onlineScene: 
+  transport: {fileID: 549628774}
+  networkAddress: localhost
+  maxConnections: 4
+  authenticator: {fileID: 0}
+  playerPrefab: {fileID: 0}
+  autoCreatePlayer: 1
+  playerSpawnMethod: 0
+  spawnPrefabs:
+  - {fileID: 886977036279754627, guid: f72609787ae91c04891bfadb81f8f412, type: 3}
+  - {fileID: 3881200637280093118, guid: 8e535852d48d78b4ba699d9f9eea6698, type: 3}
+  - {fileID: 6393091978916856413, guid: a6d03b8b415a46748a313f2fbb499f64, type: 3}
   Alex: {fileID: 7482379936359862136}
   Bryce: {fileID: 2773586681311482692}
   James: {fileID: 2568315098727849918}
-  Player1: {fileID: 886977036279754627, guid: f72609787ae91c04891bfadb81f8f412, type: 3}
-  Player2: {fileID: 3881200637280093118, guid: 8e535852d48d78b4ba699d9f9eea6698, type: 3}
-  Player3: {fileID: 6393091978916856413, guid: a6d03b8b415a46748a313f2fbb499f64, type: 3}
+  SelectedPlayer: 0
+--- !u!114 &549628774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549628768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7424c1070fad4ba2a7a96b02fbeb4bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnClientConnected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientDataReceived:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientError:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientDisconnected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerConnected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerDataReceived:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerError:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerDisconnected:
+    m_PersistentCalls:
+      m_Calls: []
+  port: 7777
+  NoDelay: 1
+  serverMaxMessageSize: 16384
+  clientMaxMessageSize: 16384
 --- !u!1 &1023453312
 GameObject:
   m_ObjectHideFlags: 0
