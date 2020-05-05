@@ -29,14 +29,11 @@ public class PlayerController : NetworkBehaviour
 
     private void Awake()
     {
-        if (LocalplayerEnabled || Practice)
-        {
-            Invoke("PlayerActive", .1f);
-        }
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         isFacingRight = true;
 
+        if(!Practice)
         PlayerHealthimage = GameObject.FindGameObjectWithTag("Health").GetComponent<Image>();
     }
 
@@ -61,11 +58,13 @@ public class PlayerController : NetworkBehaviour
             if (healthSystem.Health <= 0)
             {
                 IsPlayerDead = true;
+                FindObjectOfType<PlayerSpawner>().Panel.SetActive(true);
             }
 
             if (IsPlayerDead)
             {
-                //StartCoroutine(Death());
+                FindObjectOfType<CountDown>().timerIsActive = false;
+                animator.SetTrigger("Die");
             }
 
             animator.SetFloat("Speed", characterController.velocity.magnitude);
@@ -147,6 +146,11 @@ public class PlayerController : NetworkBehaviour
                         }
                     }
                 }
+
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    animator.SetTrigger("Fire");
+                }
             }
 
             if (!IsPlayerDead)
@@ -174,19 +178,29 @@ public class PlayerController : NetworkBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject);
-        if (other.gameObject.CompareTag("EnemyFist") || other.gameObject.CompareTag("Finger"))
+        if (other.gameObject.CompareTag("Finger"))
         {
             gameObject.GetComponent<HealthSystem>().healthDecrease(5);
             CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, 1f);
-            animator.SetTrigger("UppercutHit");
+            if (!Practice)
+            {
+                animator.SetTrigger("UppercutHit");
+            }
         }
     }
 
-
-
-    public void PlayerActive()
+    private void OnCollisionEnter(Collision collision)
     {
-        gameObject.SetActive(true);
+        Debug.Log(collision.gameObject);
+        if (collision.gameObject.CompareTag("Leg"))
+        {
+            gameObject.GetComponent<HealthSystem>().healthDecrease(20);
+            CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, 1f);
+            if (!Practice)
+            {
+                animator.SetTrigger("UppercutHit");
+            }
+        }
     }
 
     [Command]

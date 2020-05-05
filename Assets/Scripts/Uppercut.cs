@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class Uppercut : MonoBehaviour
 {
@@ -8,7 +9,10 @@ public class Uppercut : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player Health dec");
+            other.gameObject.GetComponent<Animator>().SetTrigger("UppercutHit");
+            other.gameObject.GetComponent<HealthSystem>().healthDecrease(5);
+            CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, 1f);
+
         }
     }
 }

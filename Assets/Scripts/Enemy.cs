@@ -44,12 +44,13 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Leg"))
         {
+            Debug.Log(collision.gameObject);
             Vector3 pos = GameObject.FindGameObjectWithTag("Bot").transform.position;
             Debug.Log(pos.x);
             pos.x +=1.7f;
             GameObject.FindGameObjectWithTag("Bot").transform.position = pos;
-            GameObject.FindGameObjectWithTag("Bot").GetComponent<AI>().agent.isStopped = true;
-            GameObject.FindGameObjectWithTag("Bot").GetComponent<AI>().agent.ResetPath();
+            //GameObject.FindGameObjectWithTag("Bot").GetComponent<AI>().agent.isStopped = true;
+            //GameObject.FindGameObjectWithTag("Bot").GetComponent<AI>().agent.ResetPath();
 
             gameObject.GetComponent<HealthSystem>().healthDecrease(20);
             animator.SetTrigger("Hit");

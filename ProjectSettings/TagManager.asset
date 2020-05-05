@@ -12,6 +12,7 @@ TagManager:
   - NetworkManager
   - Bot
   - Effect
+  - Health2
   layers:
   - Default
   - TransparentFX
