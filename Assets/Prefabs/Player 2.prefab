@@ -1001,6 +1001,7 @@ GameObject:
   - component: {fileID: 3881200637280093115}
   - component: {fileID: 3881200637280093116}
   - component: {fileID: 3881200637280093117}
+  - component: {fileID: 2138152277470568783}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Player
@@ -1041,12 +1042,12 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 1.61
-  m_Radius: 0.17
+  m_Radius: 0.11
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0.15, y: 0.81, z: 0.15}
+  m_Center: {x: 0.12, y: 0.81, z: 0.06}
 --- !u!95 &3881200637280093112
 Animator:
   serializedVersion: 3
@@ -1097,6 +1098,8 @@ MonoBehaviour:
   syncInterval: 0.1
   Speed: 1.3
   JumpSpeed: 4
+  HitEffect: {fileID: 0}
+  EnergyBoostEffect: {fileID: 0}
   isFacingRight: 0
   WalkSpeed: 10
   IsPlayerDead: 0
@@ -1116,6 +1119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d8a5a206e18b65449008755934d2065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   Health: 100
 --- !u!114 &3881200637280093116
 MonoBehaviour:
@@ -1175,6 +1180,20 @@ MonoBehaviour:
   NoDelay: 1
   serverMaxMessageSize: 16384
   clientMaxMessageSize: 16384
+--- !u!136 &2138152277470568783
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3881200637280093118}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.08826257
+  m_Height: 0.8594408
+  m_Direction: 1
+  m_Center: {x: 0.10960075, y: 1.0598187, z: 0.09216371}
 --- !u!1 &3883648436976793563
 GameObject:
   m_ObjectHideFlags: 0
