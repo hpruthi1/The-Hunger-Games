@@ -6,13 +6,13 @@ public class UIManager : MonoBehaviour
 {
     public void OnlineScene()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Start");
         GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManagerHUD>().enabled = true;
     }
 
     public void OfflineScene()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("Practice");
     }
 
     public void onExitButtoon()
@@ -22,12 +22,17 @@ public class UIManager : MonoBehaviour
 
     public void BackButton()
     {
-        SceneManager.LoadScene("New Scene");
+        SceneManager.LoadScene("MainMenu"); 
         GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManagerHUD>().enabled = false;
     }
 
-    public void PlayAgain()
+    public void PracticePlayAgain()
     {
-        SceneManager.LoadScene("Practice");
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void EndScenePlayAgain()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }

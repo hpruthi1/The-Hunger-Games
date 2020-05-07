@@ -8,8 +8,7 @@ using EZCameraShake;
 
 public class PlayerController : NetworkBehaviour
 {
-    private Vector3 movePosition = Vector3.zero;
-    private Vector3 moveDirection = Vector3.zero, moveForward;
+    private Vector3 moveDirection = Vector3.zero;
     public float Speed;
     public float JumpSpeed = 20.0f;
     public GameObject HitEffect;
@@ -32,9 +31,6 @@ public class PlayerController : NetworkBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         isFacingRight = true;
-
-        if(!Practice)
-        PlayerHealthimage = GameObject.FindGameObjectWithTag("Health").GetComponent<Image>();
     }
 
     private void Start()
@@ -58,7 +54,15 @@ public class PlayerController : NetworkBehaviour
             if (healthSystem.Health <= 0)
             {
                 IsPlayerDead = true;
-                FindObjectOfType<PlayerSpawner>().Panel.SetActive(true);
+                if (Practice)
+                {
+                    FindObjectOfType<PlayerSpawner>().Panel.SetActive(true);
+                }
+
+                else
+                {
+                    SceneManager.LoadScene("End");
+                }
             }
 
             if (IsPlayerDead)
