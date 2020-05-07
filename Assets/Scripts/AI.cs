@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
@@ -8,7 +7,6 @@ public class AI : MonoBehaviour
 {
     public Animator animator;
     public NavMeshAgent agent;
-    //public Transform Player;
     public float DistanceLeft;
     public float Speed;
     public bool animationCompleted = true;
@@ -23,7 +21,6 @@ public class AI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animations.Add("Box",2.333f);
         animations.Add("Uppercut",1.333f);
-        //animations.Add("Box");
     }
 
     // Update is called once per frame
