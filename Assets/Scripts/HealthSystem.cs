@@ -21,8 +21,15 @@ public class HealthSystem : NetworkBehaviour
     }
 
     [Command]
-    public void CmdUpdateHelth(float _health)
+    public void CmdDecreaseHealth(float _health)
     {
-        Health = _health;
+        FindObjectOfType<PlayerController>().PlayerHealthimage.fillAmount = Health / 100;
+        RpcDecreaseHealth(_health);
+    }
+
+    [ClientRpc]
+    public void RpcDecreaseHealth(float _health)
+    {
+        healthDecrease(_health);
     }
 }

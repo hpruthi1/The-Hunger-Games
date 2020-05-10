@@ -181,13 +181,17 @@ public class PlayerController : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject);
         if (other.gameObject.CompareTag("Finger"))
         {
-            gameObject.GetComponent<HealthSystem>().healthDecrease(5);
             CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, 1f);
+            if (Practice)
+            {
+                gameObject.GetComponent<HealthSystem>().healthDecrease(5);
+            }
+            
             if (!Practice)
             {
+                gameObject.GetComponent<HealthSystem>().CmdDecreaseHealth(5);
                 animator.SetTrigger("UppercutHit");
             }
         }
@@ -195,13 +199,16 @@ public class PlayerController : NetworkBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject);
         if (collision.gameObject.CompareTag("Leg"))
         {
-            gameObject.GetComponent<HealthSystem>().healthDecrease(20);
             CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, 1f);
+            if (Practice)
+            {
+                gameObject.GetComponent<HealthSystem>().healthDecrease(20);
+            }
             if (!Practice)
             {
+                gameObject.GetComponent<HealthSystem>().CmdDecreaseHealth(20);
                 animator.SetTrigger("UppercutHit");
             }
         }
